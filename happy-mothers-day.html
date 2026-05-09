@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>母亲节快乐</title>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    width: 100%; min-height: 100vh; overflow-x: hidden;
+    font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    background: linear-gradient(145deg, #fce4ec 0%, #f8e8f0 20%, #f3e5f5 50%, #ede7f6 80%, #e8eaf6 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Floating particles */
+  #particles {
+    position: fixed; inset:0; pointer-events: none; z-index:0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute; top:-60px;
+    opacity:0; animation: fall linear infinite;
+    display: flex; align-items:center; justify-content:center;
+    font-size: 22px; user-select:none;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%  { opacity:0.7; }
+    80%  { opacity:0.6; }
+    100% { transform: translateY(100vh) translateX(30px) rotate(360deg); opacity:0; }
+  }
+
+  /* Card */
+  .card-wrapper {
+    position: relative; z-index:1;
+    width: 100%; max-width: 420px;
+    padding: 20px; animation: cardEntrance 1.2s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes cardEntrance {
+    0%   { opacity:0; transform: translateY(40px) scale(0.92); }
+    100% { opacity:1; transform: translateY(0) scale(1); }
+  }
+  .card {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 28px; padding: 40px 28px 32px;
+    box-shadow:
+      0 2px 4px rgba(200,90,127,0.06),
+      0 8px 24px rgba(200,90,127,0.10),
+      0 24px 48px rgba(200,90,127,0.08);
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .card::before {
+    content:''; position:absolute; top:-80px; right:-80px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(232,160,180,0.20) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .card::after {
+    content:''; position:absolute; bottom:-60px; left:-60px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(212,165,201,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* Top decoration */
+  .top-deco {
+    text-align: center; margin-bottom: 16px;
+    position: relative; z-index:1;
+  }
+  .top-deco svg {
+    width: 60px; height: 60px;
+    animation: bloom 2s ease-in-out infinite alternate;
+  }
+  @keyframes bloom {
+    0%   { transform: scale(1) rotate(-2deg); }
+    100% { transform: scale(1.06) rotate(2deg); }
+  }
+
+  /* Title */
+  .title {
+    text-align: center; position: relative; z-index:1;
+    margin-bottom: 4px;
+  }
+  .title h1 {
+    font-size: 32px; font-weight: 700;
+    background: linear-gradient(135deg, #c85a7f, #a85a7f, #d4a5c9);
+    background-clip: text; -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 4px; line-height: 1.4;
+  }
+  .title .en {
+    font-family: "Georgia","Times New Roman",serif;
+    font-size: 15px; color: #c9a0b0;
+    font-style: italic; letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  /* Divider */
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin: 18px 0 20px; position: relative; z-index:1;
+  }
+  .divider .line {
+    height: 1px; flex: 1; max-width: 60px;
+    background: linear-gradient(90deg, transparent, #e8a0b4, transparent);
+  }
+  .divider .heart {
+    font-size: 16px; animation: pulseHeart 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseHeart {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  /* Message */
+  .message-area {
+    position: relative; z-index:1;
+    margin-bottom: 20px;
+  }
+  .message-box {
+    padding: 12px 6px;
+    font-size: 16px; line-height: 1.9;
+    color: #5d3a4b; text-align: center;
+    outline: none; word-break: break-word;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+    min-height: 60px;
+  }
+  /* subtle edit indicator only on desktop hover — invisible on mobile */
+  @media (hover: hover) {
+    .message-box:hover {
+      background: rgba(248,232,240,0.25);
+    }
+  }
+
+  /* Footer */
+  .card-footer {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; margin-top: 8px; position: relative; z-index:1;
+  }
+  .card-footer .date {
+    font-size: 13px; color: #c9a0b0; letter-spacing: 1px;
+  }
+  .card-footer .dot {
+    width: 3px; height: 3px; border-radius: 50%;
+    background: #e8a0b4;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .card-wrapper { padding: 12px; }
+    .card { padding: 28px 18px 24px; border-radius: 22px; }
+    .title h1 { font-size: 27px; letter-spacing: 3px; }
+    .message-box { font-size: 15px; padding: 10px 4px; }
+  }
+  @media (max-width: 360px) {
+    .title h1 { font-size: 23px; }
+    .card { padding: 22px 14px 20px; }
+    .message-box { font-size: 14px; padding: 8px 4px; min-height: 50px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .particle, .card-wrapper, .top-deco svg, .divider .heart { animation: none; }
+    .particle { display: none; }
+    .card-wrapper { opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="particles"></div>
+
+  <div class="card-wrapper">
+    <div class="card">
+
+      <div class="top-deco">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 12C28 6 20 4 16 8C12 12 12 20 18 24C14 20 10 20 8 24C6 28 10 34 16 34H32" stroke="#c85a7f" stroke-width="1.8" stroke-linecap="round" fill="rgba(200,90,127,0.06)"/>
+          <path d="M32 12C36 6 44 4 48 8C52 12 52 20 46 24C50 20 54 20 56 24C58 28 54 34 48 34H32" stroke="#c85a7f" stroke-width="1.8" stroke-linecap="round" fill="rgba(200,90,127,0.06)"/>
+          <circle cx="32" cy="18" r="4" fill="#e8a0b4" opacity="0.5"/>
+          <circle cx="32" cy="18" r="2" fill="#c85a7f"/>
+          <path d="M28 32C28 38 30 42 32 46C34 42 36 38 36 32" stroke="#a85a7f" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M28 30L28 34M36 30L36 34" stroke="#d4a5c9" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="title">
+        <h1>母亲节快乐</h1>
+        <div class="en">Happy Mother's Day</div>
+      </div>
+
+      <div class="divider">
+        <span class="line"></span>
+        <span class="heart">&#10086;</span>
+        <span class="line"></span>
+      </div>
+
+      <div class="message-area">
+        <div class="message-box" id="messageBox" contenteditable="true" spellcheck="true">妈妈，感谢您一直以来的爱与付出。您的温暖是我前行的力量，您的笑容是我最大的幸福。愿您每天都健康快乐，被爱与温暖包围。母亲节快乐，我爱您！</div>
+      </div>
+
+      <div class="card-footer">
+        <span class="date">2026年5月</span>
+        <span class="dot"></span>
+        <span class="date">母亲节</span>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(function() {
+  'use strict';
+  const PARTICLES = 20;
+  const EMOJIS = ['🌸','💝','🌺','🕊️','✨','💗','🌷','❤️','💐','🌟','🌹','💕','🪷','☁️'];
+
+  function createParticles() {
+    var container = document.getElementById('particles');
+    if (!container) return;
+    var isMobile = window.innerWidth < 480;
+    var count = isMobile ? 10 : PARTICLES;
+    for (var i = 0; i < count; i++) {
+      var el = document.createElement('div');
+      el.className = 'particle';
+      el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.fontSize = (14 + Math.random() * 18) + 'px';
+      el.style.animationDuration = (8 + Math.random() * 14) + 's';
+      el.style.animationDelay = (Math.random() * 16) + 's';
+      container.appendChild(el);
+    }
+  }
+
+  function loadMessage() {
+    var box = document.getElementById('messageBox');
+    if (!box) return;
+    var params = new URLSearchParams(window.location.search);
+    var urlMsg = params.get('msg');
+    if (urlMsg) {
+      try { box.textContent = decodeURIComponent(urlMsg); return; } catch(e) {}
+    }
+    var saved = localStorage.getItem('mothers_day_msg');
+    if (saved) { box.textContent = saved; }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    loadMessage();
+    var box = document.getElementById('messageBox');
+    if (box) {
+      box.addEventListener('input', function() {
+        try { localStorage.setItem('mothers_day_msg', box.textContent); } catch(e) {}
+      });
+    }
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        var container = document.getElementById('particles');
+        if (container) { container.innerHTML = ''; createParticles(); }
+      }, 400);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
